@@ -27,7 +27,7 @@ class Datagenerateor:
         df = pd.DataFrame()
         if (self.generator_type == 1): # all columns are random type
             for x in col_name:
-                df[x] = self.GenrateColumsData(randint(2,3), self.mini, self.maxi) #change 2 to 5
+                df[x] = self.GenrateColumsData(randint(2,3), self.mini, self.maxi) #change 3 to 5
         
         if (self.generator_type == 2): # all columns are int
             for x in col_name:   
