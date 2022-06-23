@@ -1,8 +1,8 @@
 
-from random import randint
 import pandas as pd
 import numpy as np
-
+import random
+import string
 
 
 
@@ -12,14 +12,15 @@ class Datagenerateor:
     #               3 -> all columns same type (float)
     #               4 -> all columns same type (string) 
     #               5 -> all columns same type (time) 
-    def __init__(self, number_of_columns, number_of_rows, generator_type = 1 ):
+    def __init__(self, number_of_columns, number_of_rows, minii = 0, maxii = 100, generator_type = 1 ):
         
         self.number_of_columns = number_of_columns
         self. number_of_rows = number_of_rows
         self.generator_type = generator_type
+        self.mini = minii
+        self.maxi = maxii
         self.data = self.Maingenerateor()
-        self.mini = 0
-        self.maxi = 100
+
         
     # the main generator: depending on the type it will create the data set 
     def Maingenerateor(self):
@@ -27,7 +28,7 @@ class Datagenerateor:
         df = pd.DataFrame()
         if (self.generator_type == 1): # all columns are random type
             for x in col_name:
-                df[x] = self.GenrateColumsData(randint(2,3), self.mini, self.maxi) #change 3 to 5
+                df[x] = self.GenrateColumsData(random.randint(2,5), self.mini, self.maxi) #change 4 to 5
         
         if (self.generator_type == 2): # all columns are int
             for x in col_name:   
@@ -53,7 +54,7 @@ class Datagenerateor:
         if (typ == 3): # float
             return  self.generate_random_float(mini, maxi)
         if (typ == 4): #string
-            return self.generate_random_string(mini, maxi)
+            return self.generate_random_string(5,10)
         if (typ == 5): # time
             return self.generate_random_time(mini, maxi)
         
@@ -70,11 +71,22 @@ class Datagenerateor:
         return np.random.randint(mini,maxi,self.number_of_rows)
     # to do 
     def generate_random_time(self, mini, maxi):
-        pass
-    # to do
-    def generate_random_string(self, min_length, max_length):
-        pass
+        random_time = [random.randint(0, self.maxi) for i in range (self.number_of_rows)]
+
+            
+        return [pd.Timedelta(hours=x) for x in random_time]
+    # this function takes too long run time
+    def generate_random_string(self, mini, maxi):
+        result = []
+        
+        letters = string.ascii_lowercase + string.ascii_uppercase
+        for i in range(self.number_of_rows):
+           length = random.randint(mini, maxi)
+           res = ''.join(letters[random.randint(0,  len(letters) -1)] for i in range(length))
+           result.append(res)
+        return result
   
 
-s = Datagenerateor(5, 5).data
+    
+s = Datagenerateor(5, 500, 0,  1000000,  1).data
 print(s)
