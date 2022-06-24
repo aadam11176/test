@@ -3,16 +3,24 @@ import pandas as pd
 import numpy as np
 import random
 import string
+import sys
 
 
 
 class Datagenerateor:
-    # type of data: 1 -> random type for all columns.
-    #               2 -> all columns same type (int)
-    #               3 -> all columns same type (float)
-    #               4 -> all columns same type (string) 
-    #               5 -> all columns same type (time) 
-    def __init__(self, number_of_columns, number_of_rows, minii = 0, maxii = 100, generator_type = 1 ):
+    # type of data: 1 -> random type for all columns withrandom vlaues .
+    #               2 -> all columns same type with random vlaues (int)
+    #               3 -> all columns same type with random vlaues  (float)
+    #               4 -> all columns same type with random vlaues  (string) 
+    #               5 -> all columns same type with random vlaues  (time) 
+    #               9 -> Very long variable names
+    #               to do
+    #               6 -> extrem values
+    #               7 -> highly correlated
+    #               8 -> Dataframe of only duplicates
+    #               
+    def __init__(self, number_of_columns, number_of_rows, minii = 0, maxii = 100, 
+                 generator_type = 1 ):
         
         self.number_of_columns = number_of_columns
         self. number_of_rows = number_of_rows
@@ -24,11 +32,21 @@ class Datagenerateor:
         
     # the main generator: depending on the type it will create the data set 
     def Maingenerateor(self):
-        col_name = [str(i) for i in range (self.number_of_columns)]
+        # check gen type wheter too long var name or just numbers
+        if (self.generator_type == 9):# gen type is 9 means too long var names
+            text = string.ascii_lowercase * 1000
+            col_name = [text + str(i) for i in range(self.number_of_columns)]
+          
+            
+        else:
+            col_name = [str(i) for i in range (self.number_of_columns)]
+            
+        # create data frame
         df = pd.DataFrame()
-        if (self.generator_type == 1): # all columns are random type
+        # depnding on gen type
+        if (self.generator_type == 1 or self.generator_type == 9): # all columns are random type
             for x in col_name:
-                df[x] = self.GenrateColumsData(random.randint(2,5), self.mini, self.maxi) #change 4 to 5
+                df[x] = self.GenrateColumsData(random.randint(2,5), self.mini, self.maxi) 
         
         if (self.generator_type == 2): # all columns are int
             for x in col_name:   
@@ -88,5 +106,7 @@ class Datagenerateor:
   
 
     
-s = Datagenerateor(5, 500, 0,  1000000,  1).data
-print(s)
+#s = Datagenerateor(2, 5, 0,  1000,  9).data
+#print(s)
+
+#s.to_csv('test.csv')
