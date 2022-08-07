@@ -1,0 +1,14 @@
+1-	s = Datagenerateor(x, 0, mini, maxi, 3).data
+2-	sd4py.discover_subgroups(s, "0")  one param of disxover_subgroups
+	a* using only one column => key error
+	b* 20 columns with 0 rows(no data) => return empty data frame
+	c* 200 000 columns with no data => retruns empty data frame
+
+	d** 2 columns with 10 ^6 rows (run it for 200 time) =>  1 or patterns (screen shots)
+	e** 4 columns with 10 ^6 rows (run it for 200 time) =>  about 19 patterns
+	f ** 2 columns with 10^7 rows => 1 pattern
+g    Very long variable names (error with large data frame see screen shot) this probably because of poor memory: system used 32 bit instead of 64 bit 
+h  only duplications
+I  highly correlated (float with normal distrub)
+	 
+
